@@ -1323,4 +1323,5 @@ end
 
 %%
 save('infoSeekFSMDataAnalyzed.mat','a');
+save(['infoSeekFSMDataAnalyzed_',datestr(now,29)],'a');
 % save('JB195imagingDataAnalyzed.mat','a');

@@ -425,7 +425,8 @@ b.images(:,1) = ff;
 %% TRIAL PARAMS
 
     b.trialParams = data(data(:,3) == 17, :);
-    
+   
+    % ADD TO FILE IF GET ERROR HERE!!
 %     if(size(b.trialParams,1) < trialCt)
 %         b.trialParams(end+1,:) = [totalTime, trialCt, 17, 0, 5];
 %     end
@@ -1037,4 +1038,5 @@ else
 end
 
 save('infoSeekFSMData.mat','a');
+save(['infoSeekFSMData_',datestr(now,29)],'a');
 % uisave({'a'},'infoSeekFSMData.mat');
