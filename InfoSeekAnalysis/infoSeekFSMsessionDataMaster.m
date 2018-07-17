@@ -17,8 +17,8 @@ ports = [1,3]; % port sensor IDs
 % [datafilename,datapathname]=uigetfile('*.mat', 'Choose processed data file to load');
 % fname=fullfile(datapathname,datafilename);
 
-loadData = 1;
-% loadData = 0;
+% loadData = 1;
+loadData = 0;
 
 if loadData == 1
     fname = 'infoSeekFSMData.mat';
@@ -40,6 +40,9 @@ f = 1;
 
 %% FOR EACH FILE
 for f = 1:numFiles
+    
+    clearvars -except a fname names pathname files numFiles f loadData ports;
+    
     filename = files(f).name;
     
     if loadData == 1
@@ -67,15 +70,49 @@ for f = 1:numFiles
     % as of 9/13/2017, added 2 new parameters for separate info/rand
     % reward amounts, so session parameters 2 bigger. also extra
     % parameter for FSM vs before?!?
+    
+    fileID=fopen(fname);
+    C = textscan(fileID,'%s', 'Delimiter', ',','MultipleDelimsAsOne',1);
+    fclose(fileID);
+    
+%     test=C{1,1}; % read file into cell of chars
+%     test2=test(63:end);
+%     test3=find(strcmp(test2,'0'));
+%     test4=diff(test3);
+% test5=find(strcmp(test(63:end),'0'),1);
+% test5=find(strcmp(test,'0'),20); % find the first 20 0's
+% test6=find(diff(test5)==1); % find the first 2 right after each other
+% test5(test6(1));
+% test5(test6(1))
+% % 62/2 % subtract 1 and divide by 2 since 2 columns, gives row to start data!
+    
+    allData = C{1,1};
+    firstZeros = find(strcmp(allData,'0'),20);
+    firstZerosDiff = find(diff(firstZeros)==1,1);
+    firstData = firstZeros(find(diff(firstZeros)==1,1));
+    paramsStop = floor((find(strcmp('Touch_Left',allData))+1)/2)-1;
+    paramRead = find(strcmp('Touch_Left',allData))+1;
 
-    if csvread(fname,31,0,[31,0,31,0]) == 0
-        data = csvread(fname,31,0);
-        sessionParams(:,f) = csvread(fname,1,1,[1,1,30,1]); % report        
-    elseif csvread(fname,29,0,[29,0,29,0]) == 0
-        data = csvread(fname,29,0);
-        temp = csvread(fname,1,1,[1,1,28,1]); % report
-        sessionParams(:,f) = [temp(1:20); temp(19:20); temp(21:end)];                                
+    dataStart = floor((firstData-paramRead)/5) + paramsStop + 1;
+
+%     dataStart = (firstData-1)/2;
+    data = csvread(fname,dataStart,0);
+    
+    if paramsStop < 30
+        temp = csvread(fname,1,1,[1,1,paramsStop,1]); % report
+        sessionParams(:,f) = [temp(1:20); temp(19:20); temp(21:end)]; 
+    else
+        sessionParams(:,f) = csvread(fname,1,1,[1,1,paramsStop,1]);
     end
+
+%     if csvread(fname,31,0,[31,0,31,0]) == 0
+%         data = csvread(fname,31,0);
+%         sessionParams(:,f) = csvread(fname,1,1,[1,1,30,1]); % report        
+%     elseif csvread(fname,29,0,[29,0,29,0]) == 0
+%         data = csvread(fname,29,0);
+%         temp = csvread(fname,1,1,[1,1,28,1]); % report
+%         sessionParams(:,f) = [temp(1:20); temp(19:20); temp(21:end)];                                
+%     end
 
     b = struct;
 
@@ -425,12 +462,19 @@ b.images(:,1) = ff;
 %% TRIAL PARAMS
 
     b.trialParams = data(data(:,3) == 17, :);
-   
-    % ADD TO FILE IF GET ERROR HERE!!
-%     if(size(b.trialParams,1) < trialCt)
-%         b.trialParams(end+1,:) = [totalTime, trialCt, 17, 0, 5];
-%     end
     
+    [~, uniIdx] = unique(b.trialParams(:,2));
+    
+    b.trialParams = b.trialParams(uniIdx,:);
+    
+    if(size(b.trialParams,1) ~= b.corrTrialCt)
+        if (size(b.trialParams,1) == b.corrTrialCt-1)
+            b.trialParams(end+1,:) = [totalTime, b.corrTrialCt, 17, 0, 5];
+        else
+            error('bad trial Ct');
+        end
+    end
+  
     b.trialParams = [zeros(size(b.trialParams,1),1) b.trialParams];
     b.trialParams(:,1) = ff;
 
