@@ -95,6 +95,7 @@ STATE_TYPE next_state;
 ///// PARAMS FOR TRIAL
 int blockSize = 24;
 int block[blockSize];
+int blockShuffle[blockSize];
 int trialNum;
 int choiceTrialNum;
 int choiceBlockSize;
@@ -323,7 +324,7 @@ void loop() {
       rxn = 0;
       trialCt = 0;
       trialType = 0;
-      trialNum = blockSize-1;
+      trialNum = blockSize;
       newTrial = 1;
       currentRewardTime = 0;
       odor = 7;
@@ -347,6 +348,8 @@ void loop() {
       infoOdors[1] = odorB;
       randOdors[0] = odorC;
       randOdors[1] = odorD;
+
+      blockSetup();
 
       mpr121_setup(TOUCH_IRQ, TOU_THRESH, REL_THRESH);
 
@@ -467,7 +470,7 @@ void loop() {
 
 
         
-        if (image = 0){
+        if (image = 1){
           readTTL();
         }
 
@@ -550,9 +553,9 @@ void loop() {
             Serial.println("START_TRIAL");
             tone(buzzer,4000,200);
             if (newTrial == 1) {
-              if (trialNum == blockSize-1){
+              if (trialNum == blockSize){
                 newBlock();
-                trialNum = 0;  
+                trialNum = 1;  
               }
               else{
                 trialNum++;

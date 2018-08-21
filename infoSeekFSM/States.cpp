@@ -429,8 +429,8 @@ void StateRewardDelay::s_finish()
 //    Serial.print("choice = ");
 //    Serial.println(choice);
 
-    Serial.print("lickRate = ");
-    Serial.println(lickRate);
+    // Serial.print("lickRate = ");
+    // Serial.println(lickRate);
 
 //    if (port == choice && lickRate > 0){
     if (port == choice){

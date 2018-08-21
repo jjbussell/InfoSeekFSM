@@ -4,6 +4,9 @@
 /////// REMEMBER TO CHANGE BLOCK COUNT IN SWITCHING TO NEW BLOCK AT TRIAL START!!!
 ////// ALSO REMEMBER TO COUNT UP CHOICE TRIALS!!!!
 
+// BLOCK SETUP RUNS ONCE AT SESSION START (SET CHOICE TRIAL COUNT)
+// SHUFFLE BLOCKS AT EACH NEW BLOCK
+
 void blockSetup(void){
   float choicePercent;
   float infoPercent;
@@ -23,7 +26,6 @@ void blockSetup(void){
   int choiceRandSmallCount;
   float blockTypeSize[4];
   int blockTypeCounts[4];
-  int blockShuffle[blockSize];
   int blockTypeCount;
   int blockType;
   int startType;
@@ -32,6 +34,8 @@ void blockSetup(void){
   int n;
   int temp;
 
+
+  // determine fraction of each trial type (info, random, choice) based on trialTypes input
   switch (trialTypes) {
     case 1: // choice
       choicePercent = 1; infoPercent = 0; randPercent = 0;
@@ -59,11 +63,18 @@ void blockSetup(void){
       break;
   }
 
+
+  // count of trials of each choice type in block
   randBlockCount = randPercent * (float)blockSize;
   infoBlockCount = infoPercent * (float)blockSize;
   choiceBlockCount = choicePercent * (float)blockSize;
   choiceBlockSize = (int)choiceBlockCount;
 
+  // make a mini-block of choice trials for both info and rand choices = choiceInfoBlock, choiceRandBlock
+  // with the correct number of big vs small rewards for each type
+  // cycle through based on choices
+
+  // count of trials of each choice type in each mini block
   choiceInfoBigSize = choiceBlockCount - (float)infoRewardProb/100*choiceBlockCount;
   choiceInfoSmallSize = choiceBlockCount - choiceInfoBigSize;
   choiceRandBigSize = choiceBlockCount - (float)randrewardProb/100*choiceBlockCount;
@@ -74,6 +85,7 @@ void blockSetup(void){
   choiceRandBigCount = (int)choiceRandBigSize;
   choiceRandSmallCount = (int)choiceRandSmallSize;
 
+  // assign the rewards to the info and rand choice blocks
   for (int n=0;n<choiceBlockSize;n++){
     if (n<choiceInfoBigCount){
       choiceInfoBlock[n] = 1;
@@ -89,6 +101,7 @@ void blockSetup(void){
     }
   }
 
+  // assign the count of each type of forced trial
   blockTypeSize[0] = infoBlockCount - (float)infoRewardProb/100*infoBlockCount; // info big
   blockTypeSize[1] = infoBlockCount - blockTypeSize[0]; // info small
   blockTypeSize[2] = randBlockCount-(float)randRewardProb/100*randBlockCount; // rand big
@@ -98,7 +111,7 @@ void blockSetup(void){
     blockTypeCounts[i]=(int)blockTypeSize[i];
   }
 
-  /// MAKE FULL BLOCK TO SHUFFLE
+  /// MAKE FULL BLOCK TO SHUFFLE=blockShuffle
   for (int i=0; i<blockSize; i++){
     blockShuffle[i]=0;
   }
@@ -119,6 +132,15 @@ void blockSetup(void){
     typeStop = startType+blockTypeCount;
   }
 
+  Serial.print("BLOCK TO SHUFFLE = ");
+  for (int 1=0; i<blockSize; i++){
+    Serial.print(blockShuffle[i]);
+  }
+  Serial.println(" ");
+}
+
+void newBlockNew(){
+
   // SHUFFLE BLOCK  
 
   for ( int p=0; p<blockSize; p++){
@@ -129,7 +151,13 @@ void blockSetup(void){
     temp = block[n];
     block[n] = block[i];
     block[i] = temp;
-  }    
+  }
+
+  Serial.print("NEW BLOCK = ");
+  for (int 1=0; i<blockSize; i++){
+    Serial.print(block[i]);
+  }
+  Serial.println(" ");
 }
 
 
@@ -220,120 +248,6 @@ int randomize(int prob) {
   }
   return randVal;
 } 
-
-
-///// SET BLOCK OF TRIAL TYPES
-void newBlock(){
-  // if trialTypes == 5, blocks of 6. if trialTypes == 4,7,8, blocks of 4. else, constant blocks of 6.
-  // NO, blocks of 24 either way. If trialTypes == 5, 8 of each type, 2 big, 6 small. If trialTypes == 4, 12 of each type, 3 big, 9 small
-  // trialTypes 5 array to shuffle
-
-  // shuffle pre-set arrays of 24? make one for all possible options (reward probs and trialTypes)? Just give up on unequal reward probs? In that case set reward separately??
-
-  // REWARD PROBS
-  if (infoRewardProb == randRewardProb){
-  
-    switch (trialTypes) {
-        case 1: // choice
-          if (infoRewardProb == 100){
-            for (int i=0; i < 24; i++){
-              blockShuffle[i] = 1;
-            }
-          }
-          else if (infoRewardProb == 50){
-            blockShuffle = [1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2];
-          }
-          else if (infoRewardProb == 25){
-          }
-          for (int i=0; i < 24; i++){
-            block[i] = 1;   
-          }
-
-          // first calc fraction info, random, choice
-          // then have count of each type for reward array size
-          // create final mini-arry for each choice type
-
-//////////////////////////////////////////////////////////////////////////////////
-          // these change based on trialtypes
-          float randPercent = 0.333
-          float infoPercent = 0.333
-          float choicePercent = 0.334
-
-          int blockCount = 24;
-
-          int randBlockCount = randPercent * blockCount;
-          infoBlockCount = infoPercent * blockCount;
-          choiceBlockCount = choicePercent * blockCount;
-
-          int blockTypeCounts[4];
-
-          blockTypeCounts[0] = infoBlockCount - infoRewardProb/100*infoBlockCount; // info big
-          blockTypeCounts[1] = infoBlockCount - blockInfoBigCount; // info small
-          blockTypeCounts[2] = randBlockCount-randRewardProb/100*randBlockCount; // rand big
-          blockTypeCounts[3] = randBlockCount-blockRandBigCount; // rand small
-
-          int blockTypes = [2 3 4 5];
-
-          choiceInfoBigCount = choiceBlockCount - infoRewardProb/100*choiceBlockCount;
-          choiceInfoSmallCount = choiceBlockCount - choiceInfoBigCount;
-          choiceRandBigCount = choiceBlockCount - randRewardProb/100*choiceBlockCount;
-          choiceRandSmallCount = choiceBlockCount-choiceRandBigCount;
-
-          int blockShuffle[blockCount];
-
-          for (i = 0; i<choiceBlockCount; i++){
-            blockShuffle[i] = 1;
-            typeStop = choiceBlockCount;
-          }
-
-          for (i = 0; i<4; i++){
-            blockTypeCount = blockTypeCounts[i];
-            blockType = blockTypes[i];
-            startType = typeStop+1;
-            for (j = startType; j<blockTypeCount; j++){
-              blockShuffle[j] = blockType;
-            }
-            typeStop = startType+blockTypeCount;
-          }
-
-
-          ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-          
-          for (int i = 0; i < blockBigCount; i++){
-            blockShuffle[i] = bigType;
-          }
-          for (int j = blockBigCount+1; j<24; j++){
-            blockShuffle[j] = smallType;
-          }
-          
-          break;
-        case 2: // forced info
-          for (int i=0; i < 24; i++){
-            block6[i] = 2;   
-          }
-          break;
-        case 3: // forced rand
-          for (int i=0; i < 24; i++){
-            block6[i] = 3;   
-          }
-          break;
-        case 4: // alternate forced info and forced rand
-          block4 = shuffleBlock();
-          break;
-        case 5: // all three trial types
-          //
-          block6 = shuffleBlock();
-          break;
-        case 7: // forced info or choice
-          block4 = shuffleBlock();
-          break;
-        case 8: // forced rand or choice
-          block4 = shuffleBlock();
-          break;
-    }
-  }
- }
 
 
 ///// SET BLOCK OF TRIAL TYPES

@@ -7,6 +7,7 @@ extern int odor;
 extern unsigned long currentRewardTime;
 extern int block[];
 extern int blockSize;
+extern int blockShuffle[blockSize];
 extern int choiceBlockSize;
 extern int choiceInfoBlock;
 extern int choiceRandBlock;
