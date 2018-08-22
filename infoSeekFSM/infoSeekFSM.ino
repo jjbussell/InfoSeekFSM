@@ -104,6 +104,7 @@ int choiceRandBlock[blockSize];
 int newTrial;
 int trialCt;
 int trialType;
+int trialChoiceType;
 unsigned long currentRewardTime;
 int rewardDrops;
 int maxRewardDrops;
@@ -324,8 +325,10 @@ void loop() {
       rxn = 0;
       trialCt = 0;
       trialType = 0;
+      trialChoiceType = 0;
       trialNum = blockSize;
       newTrial = 1;
+      reward = 0;
       currentRewardTime = 0;
       odor = 7;
       rewardCount = 0;
@@ -555,19 +558,46 @@ void loop() {
             if (newTrial == 1) {
               if (trialNum == blockSize){
                 newBlock();
-                trialNum = 1;  
+                trialNum = 1;
+                choiceTrialNum = 1; 
               }
               else{
                 trialNum++;
               }
               trialType = block[trialNum];
+
+              switch(trialType){
+                case 1:
+                  trialChoiceType = 1;
+                  choiceTrialNum++;
+                  break;
+                case 2:
+                  trialChoiceType = 2;
+                  reward = 1;
+                  break;
+                case 3:
+                  trialChoiceType = 2;
+                  reward = 0;
+                  break;
+                case 4:
+                  trialChoiceType = 3;
+                  reward = 1;
+                  break;
+                case 5:
+                  trialChoiceType = 3;
+                  reward = 0;
+                  break;
+              }
+
               setCenterOdor();      
               newTrial = 0;      
             }
-            printer(10, trialType, infoSide);
+            printer(10, trialChoiceType, trialType);
             trialStart = currentTime;
             Serial.print("Trial num = ");
             Serial.println(trialCt);
+            Serial.print("Trial choice type = ");
+            Serial.println(trialChoiceType);
             Serial.print("Trial type = ");
             Serial.println(trialType);
 
