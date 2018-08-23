@@ -6,12 +6,13 @@ extern int randRewardProb;
 extern int odor;
 extern unsigned long currentRewardTime;
 extern int block[];
-extern int blockSize;
-extern int blockShuffle[blockSize];
-extern int choiceBlockSize;
-extern int choiceInfoBlock;
-extern int choiceRandBlock;
+extern const int blockSize;
+//extern int blockShuffle[];
+//extern int choiceInfoBlock[];
+//extern int choiceRandBlock[];
 extern int trialType;
+extern int trialChoiceType;
+extern int choiceTrialNum;
 extern int trialTypes;
 extern int infoPort;
 extern int randPort;
@@ -28,12 +29,16 @@ extern int water;
 extern int infoWater;
 extern int randWater;
 
+int blockShuffle[24];
+int choiceInfoBlock[24];
+int choiceRandBlock[24];
+
 void blockSetup(void);
 
 void newBlock(void);
 
 void pickTrialParams(int);
 
-int randomize(void);
+int randomize(int);
 
 #endif

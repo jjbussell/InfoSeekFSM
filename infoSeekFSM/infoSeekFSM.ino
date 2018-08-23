@@ -93,14 +93,10 @@ STATE_TYPE next_state;
 //STATE_TYPE current_state;
 
 ///// PARAMS FOR TRIAL
-int blockSize = 24;
+const int blockSize = 24;
 int block[blockSize];
-int blockShuffle[blockSize];
 int trialNum;
 int choiceTrialNum;
-int choiceBlockSize;
-int choiceInfoBlock[blockSize];
-int choiceRandBlock[blockSize];
 int newTrial;
 int trialCt;
 int trialType;
@@ -479,8 +475,8 @@ void loop() {
 
         //// WATCH PORTS
         //// MOVE TO FUNCTIONS/LIBRARY
-        if (beamBreak(centerPort) == 1){ // is being broken
-//        if (digitalRead(53) == LOW){ // TOUCHING
+//        if (beamBreak(centerPort) == 1){ // is being broken
+        if (digitalRead(53) == LOW){ // TOUCHING
           if (centerFlag == 0){ // if not currently broken
             Serial.println("Enter center");
             centerFlag = 1;
@@ -499,8 +495,8 @@ void loop() {
         }
 
 
-        if (beamBreak(infoPort) == 1){ // is being broken
-//        if (digitalRead(47) == LOW){
+//        if (beamBreak(infoPort) == 1){ // is being broken
+        if (digitalRead(47) == LOW){
             if (infoFlag == 0){ // if not currently broken
             Serial.println("Enter info");
             infoFlag = 1;
@@ -519,8 +515,8 @@ void loop() {
         }
 
 
-        if (beamBreak(randPort) == 1){ // is being broken
-//        if (digitalRead(49) == LOW){
+//        if (beamBreak(randPort) == 1){ // is being broken
+        if (digitalRead(49) == LOW){
             if (randFlag == 0){ // if not currently broken
             Serial.println("Enter random");
             randFlag = 1;

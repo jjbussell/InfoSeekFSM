@@ -14,8 +14,8 @@ void blockSetup(void){
   float infoBlockCount;
   float randBlockCount;
   float choiceBlockCount;
-  int blockTypeCounts[4];
-  int blockTypes = [2,3,4,5];
+  int blockTypes[4] = {2,3,4,5};
+  int choiceBlockSize;
   float choiceInfoBigSize;
   float choiceInfoSmallSize;
   float choiceRandBigSize;
@@ -30,7 +30,6 @@ void blockSetup(void){
   int blockType;
   int startType;
   int typeStop = choiceBlockSize;
-  int blockTypes[] = {2,3,4,5};
   int n;
   int temp;
 
@@ -77,7 +76,7 @@ void blockSetup(void){
   // count of trials of each choice type in each mini block
   choiceInfoBigSize = choiceBlockCount - (float)infoRewardProb/100*choiceBlockCount;
   choiceInfoSmallSize = choiceBlockCount - choiceInfoBigSize;
-  choiceRandBigSize = choiceBlockCount - (float)randrewardProb/100*choiceBlockCount;
+  choiceRandBigSize = choiceBlockCount - (float)randRewardProb/100*choiceBlockCount;
   choiceRandSmallSize = choiceBlockCount - choiceRandBigSize;
 
   choiceInfoBigCount = (int)choiceInfoBigSize;
@@ -112,40 +111,47 @@ void blockSetup(void){
   }
 
   /// MAKE FULL BLOCK TO SHUFFLE=blockShuffle
-  for (int i=0; i<blockSize; i++){
-    blockShuffle[i]=0;
-  }
 
   // Place choice trials
-  for (int i = 0; i<choiceBlockSize; i++){
-    blockShuffle[i] = 1;
+  for (int k = 0; k<choiceBlockSize; k++){
+    blockShuffle[k] = 1;
   }
 
   // Place info and random trials
-  for (int i = 0; i<4; i++){
-    blockTypeCount = blockTypeCounts[i];
-    blockType = blockTypes[i];
+  for (int p = 0; p<4; p++){
+    blockTypeCount = blockTypeCounts[p];
+    blockType = blockTypes[p];
     startType = typeStop; 
-    for (int j = startType; j<blockTypeCount+startType; j++){
-      blockShuffle[j] = blockType;
+    for (int q = startType; q<blockTypeCount+startType; q++){
+      blockShuffle[q] = blockType;
     }
     typeStop = startType+blockTypeCount;
   }
 
   Serial.print("BLOCK TO SHUFFLE = ");
-  for (int 1=0; i<blockSize; i++){
-    Serial.print(blockShuffle[i]);
+  int r;
+  for (r=0; r<blockSize; r=r+1){
+    Serial.print(blockShuffle[r]);
   }
   Serial.println(" ");
 }
 
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 void newBlock(){
 
+  int n;
+  int temp;
+  
   // SHUFFLE BLOCK  
 
-  for ( int p=0; p<blockSize; p++){
-    block[p] = blockShuffle[p];
+  for (int w=0; w<blockSize; w++){
+    block[w] = blockShuffle[w];
   }
+
   for (int i=0; i<blockSize; i++){
     n = random(0,blockSize);
     temp = block[n];
@@ -154,8 +160,8 @@ void newBlock(){
   }
 
   Serial.print("NEW BLOCK = ");
-  for (int 1=0; i<blockSize; i++){
-    Serial.print(block[i]);
+  for (int j=0; j<blockSize; j++){
+    Serial.print(block[j]);
   }
   Serial.println(" ");
 }
@@ -179,7 +185,7 @@ void pickTrialParams(int choice){
     {
       reward = choiceInfoBlock[choiceTrialNum];
     }
-    elseif(choice == 0){
+    else if(choice == 0){
       reward = choiceRandBlock[choiceTrialNum];
     }
   }
