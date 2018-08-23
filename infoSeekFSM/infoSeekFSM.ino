@@ -93,8 +93,8 @@ STATE_TYPE next_state;
 //STATE_TYPE current_state;
 
 ///// PARAMS FOR TRIAL
-const int blockSize = 24;
-int block[blockSize];
+const int globalBlockSize = 24;
+int block[globalBlockSize];
 int trialNum;
 int choiceTrialNum;
 int newTrial;
@@ -322,7 +322,7 @@ void loop() {
       trialCt = 0;
       trialType = 0;
       trialChoiceType = 0;
-      trialNum = blockSize;
+      trialNum = globalBlockSize;
       newTrial = 1;
       reward = 0;
       currentRewardTime = 0;
@@ -552,7 +552,7 @@ void loop() {
             Serial.println("START_TRIAL");
             tone(buzzer,4000,200);
             if (newTrial == 1) {
-              if (trialNum == blockSize){
+              if (trialNum == globalBlockSize){
                 newBlock();
                 trialNum = 1;
                 choiceTrialNum = 1; 

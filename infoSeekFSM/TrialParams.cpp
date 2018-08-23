@@ -1,6 +1,11 @@
 #include "TrialParams.h"
 #include "Arduino.h"
 
+const int blockSize = 24;
+int blockShuffle[blockSize];
+int choiceInfoBlock[blockSize];
+int choiceRandBlock[blockSize];
+
 /////// REMEMBER TO CHANGE BLOCK COUNT IN SWITCHING TO NEW BLOCK AT TRIAL START!!!
 ////// ALSO REMEMBER TO COUNT UP CHOICE TRIALS!!!!
 
@@ -29,9 +34,11 @@ void blockSetup(void){
   int blockTypeCount;
   int blockType;
   int startType;
-  int typeStop = choiceBlockSize;
+  int typeStop;
   int n;
   int temp;
+
+  randomSeed(analogRead(15));
 
 
   // determine fraction of each trial type (info, random, choice) based on trialTypes input
@@ -100,6 +107,19 @@ void blockSetup(void){
     }
   }
 
+  if (choiceBlockSize >0){
+    Serial.print("INFO CHOICE BLOCK = ");
+    for (int r=0; r<blockSize; r=r+1){
+      Serial.print(choiceInfoBlock[r]);
+    }
+    Serial.println(" ");
+    Serial.print("RAND CHOICE BLOCK = ");    
+    for (int r=0; r<blockSize; r=r+1){
+      Serial.print(choiceRandBlock[r]);
+    }
+    Serial.println(" ");    
+  }
+
   // assign the count of each type of forced trial
   blockTypeSize[0] = infoBlockCount - (float)infoRewardProb/100*infoBlockCount; // info big
   blockTypeSize[1] = infoBlockCount - blockTypeSize[0]; // info small
@@ -117,6 +137,7 @@ void blockSetup(void){
     blockShuffle[k] = 1;
   }
 
+  typeStop = choiceBlockSize;
   // Place info and random trials
   for (int p = 0; p<4; p++){
     blockTypeCount = blockTypeCounts[p];
@@ -129,8 +150,7 @@ void blockSetup(void){
   }
 
   Serial.print("BLOCK TO SHUFFLE = ");
-  int r;
-  for (r=0; r<blockSize; r=r+1){
+  for (int r=0; r<blockSize; r=r+1){
     Serial.print(blockShuffle[r]);
   }
   Serial.println(" ");
