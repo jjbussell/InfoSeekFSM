@@ -5,7 +5,7 @@
 //// INTER_TRIAL_INTERVAL 15
 void StateInterTrialInterval::s_setup()
 {
-  Serial.println("ITI");
+//  Serial.println("ITI");
 //  Serial.println("setting duration");
   set_duration(interval + random(1,1000));
   Serial.print("Completed Trials: ");
@@ -111,7 +111,7 @@ void StateCenterOdor::s_finish()
 //// CENTER_POSTODOR_DELAY 6
 void StateCenterPostOdorDelay::s_setup()
 {
-  Serial.println("CENTER_POSTODOR_DELAY");
+//  Serial.println("CENTER_POSTODOR_DELAY");
 }
 void StateCenterPostOdorDelay::loop()
 
@@ -406,18 +406,18 @@ void StateRewardDelay::s_finish()
 //  Serial.print("reward delay end ");
 //  Serial.println(currentTime);
 //
- Serial.print("current reward time (drops) ");
+// Serial.print("current reward time (drops) ");
  Serial.println(currentRewardTime);
 
  rewardDropCount = maxRewardDrops;
   
   if (choice < 2){
     if (infoFlag == 1){
-      Serial.println("in info port");
+//      Serial.println("in info port");
       port = 1;
     }
     else if (randFlag == 1){
-      Serial.println("in rand port");
+//      Serial.println("in rand port");
       port = 0;
     }
     else {
@@ -436,7 +436,7 @@ void StateRewardDelay::s_finish()
     if (port == choice){
       rewardCount++;
       rewardDrops = currentRewardTime;
-      Serial.print("reward drops = ");
+//      Serial.print("reward drops = ");
       Serial.println(rewardDrops);
 
       if (reward == 1) {

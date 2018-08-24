@@ -404,7 +404,7 @@ void loop() {
         ///////////////////////// CHECK IF TIME TO END //////////////////////////////////
         if (digitalRead(button) == LOW){ // 50 is the ASCII code for the digit 2
           Serial.println(" ");
-          Serial.println("Session stop.");
+//          Serial.println("Session stop.");
           endingSession(currentTime);
           break;
         }
@@ -550,6 +550,7 @@ void loop() {
 
             Serial.println();
             Serial.println("START_TRIAL");
+            Serial.println();
             tone(buzzer,4000,200);
             if (newTrial == 1) {
               if (trialNum == globalBlockSize){
@@ -590,12 +591,14 @@ void loop() {
             }
             printer(10, trialChoiceType, trialType);
             trialStart = currentTime;
+            Serial.println();
             Serial.print("Trial num = ");
             Serial.print(trialCt);
             Serial.print("   Trial choice type = ");
             Serial.print(trialChoiceType);
             Serial.print("   Trial type = ");
             Serial.println(trialType);
+            Serial.println();
 
 //            Serial.println("end start trial, move to START_TRIAL_DELAY");
             
@@ -659,7 +662,7 @@ void loop() {
             if (rewardDrops > 0){
 //            if (rewardDrops > 0 & reward == 1 & lickRate >0){
               Serial.println("DELIVER REWARD DROP");
-              Serial.println("water on");
+//              Serial.println("water on");
               digitalWrite(water, HIGH);
               printer(7, choice, 0);
               waterValveOpen = true;
@@ -668,16 +671,16 @@ void loop() {
 
             delay(rewardDropTime);
 
-            Serial.println("reward time delay");
+//            Serial.println("reward time delay");
             
             if (waterValveOpen) {
-              Serial.println("water off");
+//              Serial.println("water off");
               digitalWrite(water, LOW);
               waterValveOpen = false;
               printer(8, choice, 0);
               rewardDrops = rewardDrops - 1;
-              Serial.print("rewardDrops = ");
-              Serial.println(rewardDrops);   
+//              Serial.print("rewardDrops = ");
+//              Serial.println(rewardDrops);   
             }
 
             rewardDropCount = rewardDropCount - 1;
@@ -703,7 +706,9 @@ void loop() {
             break;
 
           case REWARD_COMPLETE:
+              Serial.println();
               Serial.println("TRIAL COMPLETE");
+              Serial.println();
               printer(18,trialType,choice);
               if (trialType == 1 && choice == 0){
                 randCCt++;
