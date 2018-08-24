@@ -166,7 +166,7 @@ void blockSetup(void){
 void newBlock(){
 
   int n;
-  int temp
+  int temp;
   int m;
   int p;
   int tempInfo;
