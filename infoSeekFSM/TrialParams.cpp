@@ -83,9 +83,9 @@ void blockSetup(void){
   // cycle through based on choices
 
   // count of trials of each choice type in each mini block
-  choiceInfoBigSize = choiceBlockCount - (float)infoRewardProb/100*choiceBlockCount;
+  choiceInfoBigSize = (float)infoRewardProb/100*choiceBlockCount;
   choiceInfoSmallSize = choiceBlockCount - choiceInfoBigSize;
-  choiceRandBigSize = choiceBlockCount - (float)randRewardProb/100*choiceBlockCount;
+  choiceRandBigSize = (float)randRewardProb/100*choiceBlockCount;
   choiceRandSmallSize = choiceBlockCount - choiceRandBigSize;
 
   choiceInfoBigCount = (int)choiceInfoBigSize;
