@@ -31,7 +31,7 @@ void StateInterTrialInterval::s_finish()
 //// WAIT_FOR_TRIAL 0
 void StateWaitForTrial::s_setup()
 {
-  Serial.println("WAIT_FOR_TRIAL");
+//  Serial.println("WAIT_FOR_TRIAL");
   trialStart = 0;
   rxn = 0;
   choiceStart = 0;
@@ -49,13 +49,13 @@ void StateWaitForTrial::s_finish()
 //// START_TRIAL_DELAY 2
 void StateStartTrialDelay::s_setup()
 {
-  Serial.println("DELAY for beep");
+//  Serial.println("DELAY for beep");
 }
 
 void StateStartTrialDelay::s_finish()
 {
 //  Serial.println("end start trial delay, move to WAIT_FOR_CENTER");
-  Serial.println("WAIT_FOR_CENTER");
+//  Serial.println("WAIT_FOR_CENTER");
   next_state = WAIT_FOR_CENTER;
 }
 
@@ -63,7 +63,7 @@ void StateStartTrialDelay::s_finish()
 //// CENTER_DELAY 4
 void StateCenterDelay::s_setup()
 {
-  Serial.println("CENTER_DELAY");
+//  Serial.println("CENTER_DELAY");
   printer(13,0,0);
 }
 
@@ -133,7 +133,7 @@ void StateCenterPostOdorDelay::s_finish()
 //// GO_CUE_DELAY 8
 void StateGoCueDelay::s_setup()
 {
-  Serial.println("DELAY for beep");
+//  Serial.println("DELAY for beep");
 }
 
 void StateGoCueDelay::s_finish()
@@ -147,7 +147,7 @@ void StateGoCueDelay::s_finish()
 void StateResponse::s_setup()
 {
   choiceStart = millis()-startTime;
-  Serial.println("RESPONSE");
+//  Serial.println("RESPONSE");
   
 //  Serial.print("choiceStart = ");
 //  Serial.println(choiceStart);
@@ -214,7 +214,7 @@ void StateResponse::s_finish()
 //// GRACE_PERIOD 10
 void StateGracePeriod::s_setup()
 {
-  Serial.println("GRACE_PERIOD ");
+//  Serial.println("GRACE_PERIOD ");
 }
 
 void StateGracePeriod::loop()
@@ -268,7 +268,7 @@ void StateGracePeriod::s_finish()
     next_state = TIMEOUT;
   }
   else {
-    Serial.println("end GRACE, move to SIDE_ODOR");
+//    Serial.println("end GRACE, move to SIDE_ODOR");
     next_state = SIDE_ODOR;
   }
 }
@@ -307,7 +307,7 @@ void StateWaitForOdor::s_finish()
 //// SIDE_ODOR 12
 void StateSideOdor::s_setup()
 {
-  Serial.println("SIDE_ODOR");
+//  Serial.println("SIDE_ODOR");
 //  Serial.print("Time is ");
 //  Serial.println(currentTime);
   if (choice < 2){
@@ -347,7 +347,7 @@ void StateSideOdor::s_finish()
 //// REWARD_DELAY 13
 void StateRewardDelay::s_setup()
 {
-  Serial.println("REWARD_DELAY");
+//  Serial.println("REWARD_DELAY");
   buzzInterval = rewardDelay/10;
   change = 0;
   buzzCt = 0;

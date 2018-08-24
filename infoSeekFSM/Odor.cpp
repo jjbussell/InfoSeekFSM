@@ -60,8 +60,8 @@ void odorOn (int rewardOdor) {
   digitalWrite (valves1[rewardOdor], HIGH);
   digitalWrite (valves2[rewardOdor], HIGH);
   odorValveOpen = 1;
-  Serial.print("Odor on ");
-  Serial.println(rewardOdor);
+//  Serial.print("Odor on ");
+//  Serial.println(rewardOdor);
   printer(3, rewardOdor, 1);
 }
 
@@ -70,8 +70,8 @@ void odorOff (int rewardOdor) {
   digitalWrite (valves1[rewardOdor], LOW);
   digitalWrite (valves2[rewardOdor], LOW);
   odorValveOpen = 0;
-  Serial.print("odor off ");
-  Serial.println(rewardOdor);
+//  Serial.print("odor off ");
+//  Serial.println(rewardOdor);
   printer(5, rewardOdor, 1);
 }
 
@@ -84,8 +84,8 @@ void centerOdorOn (int centOdor){
   }
   centerOdorValveOpen = 1;
   currentCenterOdor = centOdor;
-  Serial.print("center odor on ");
-  Serial.println(centOdor);
+//  Serial.print("center odor on ");
+//  Serial.println(centOdor);
   printer(3,centOdor,0);
 }
 
@@ -96,8 +96,8 @@ void centerOdorOff (int centOdor){
     digitalWrite (valves5[centOdor], LOW);
   }
   centerOdorValveOpen = 0;
-  Serial.print("center odor off ");
-  Serial.println(centOdor);
+//  Serial.print("center odor off ");
+//  Serial.println(centOdor);
   printer(5,centOdor,0);
 }
 

@@ -591,10 +591,10 @@ void loop() {
             printer(10, trialChoiceType, trialType);
             trialStart = currentTime;
             Serial.print("Trial num = ");
-            Serial.println(trialCt);
-            Serial.print("Trial choice type = ");
-            Serial.println(trialChoiceType);
-            Serial.print("Trial type = ");
+            Serial.print(trialCt);
+            Serial.print("   Trial choice type = ");
+            Serial.print(trialChoiceType);
+            Serial.print("   Trial type = ");
             Serial.println(trialType);
 
 //            Serial.println("end start trial, move to START_TRIAL_DELAY");
@@ -608,7 +608,7 @@ void loop() {
 
           case WAIT_FOR_CENTER:
             if (centerFlag == 1){
-              Serial.println("CENTER START");
+//              Serial.println("CENTER START");
               next_state = CENTER_DELAY;
             }
             break;
