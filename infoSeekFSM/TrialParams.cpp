@@ -123,9 +123,9 @@ void blockSetup(void){
   }
 
   // assign the count of each type of forced trial
-  blockTypeSize[0] = infoBlockCount - (float)infoRewardProb/100*infoBlockCount; // info big
+  blockTypeSize[0] = (float)infoRewardProb/100*infoBlockCount; // info big
   blockTypeSize[1] = infoBlockCount - blockTypeSize[0]; // info small
-  blockTypeSize[2] = randBlockCount-(float)randRewardProb/100*randBlockCount; // rand big
+  blockTypeSize[2] = (float)randRewardProb/100*randBlockCount; // rand big
   blockTypeSize[3] = randBlockCount-blockTypeSize[2]; // rand small  
 
   for (int i = 0; i<4; i++){
