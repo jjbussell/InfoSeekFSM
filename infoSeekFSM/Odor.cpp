@@ -4,7 +4,7 @@
 
 //////////////////////  CENTER ODORS  ///////////////////////
 void setCenterOdor(){
-  switch (trialType) {
+  switch (trialChoiceType) {
       case 1: //choice
         centerOdor = choiceOdor;
         break;

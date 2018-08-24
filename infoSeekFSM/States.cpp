@@ -152,13 +152,13 @@ void StateResponse::s_setup()
 //  Serial.print("choiceStart = ");
 //  Serial.println(choiceStart);
     
-  printer(1,trialType,infoSide);
+  printer(1,trialChoiceType,infoSide);
 }
 
 void StateResponse::loop()
 {
   if (infoFlag == 1){
-    if(trialType == 1 || trialType == 2){
+    if(trialChoiceType == 1 || trialChoiceType == 2){
       Serial.println("CHOICE INFO");
       choice = 1;
     }
@@ -178,7 +178,7 @@ void StateResponse::loop()
 //    next_state = WAIT_FOR_ODOR;
   }
   else if (randFlag == 1){
-    if(trialType == 1 || trialType == 3){
+    if(trialChoiceType == 1 || trialChoiceType == 3){
       Serial.println("CHOICE RAND");
       choice = 0;
  
@@ -221,7 +221,7 @@ void StateGracePeriod::loop()
 {
   if (choice ==2){
     if (infoFlag == 1){
-      if(trialType == 1 || trialType == 2){
+      if(trialChoiceType == 1 || trialChoiceType == 2){
         Serial.println("CHOICE INFO");
         choice = 1;
       }
@@ -240,7 +240,7 @@ void StateGracePeriod::loop()
       flag_stop = 1;
     }
     else if (randFlag == 1){
-      if(trialType == 1 || trialType == 3){
+      if(trialChoiceType == 1 || trialChoiceType == 3){
         Serial.println("CHOICE RAND");
         choice = 0;   
       }
@@ -442,13 +442,13 @@ void StateRewardDelay::s_finish()
       if (reward == 1) {
         rewardBigCount++;
         Serial.println("Big reward");
-        printer(15, trialType, choice);
+        printer(15, trialChoiceType, choice);
         
       }
       else {
         rewardSmallCount++;
         Serial.println("Small reward");
-        printer(16, trialType, choice);
+        printer(16, trialChoiceType, choice);
       }
     }
   }

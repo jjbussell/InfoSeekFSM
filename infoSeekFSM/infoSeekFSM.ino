@@ -709,17 +709,17 @@ void loop() {
               Serial.println();
               Serial.println("TRIAL COMPLETE");
               Serial.println();
-              printer(18,trialType,choice);
-              if (trialType == 1 && choice == 0){
+              printer(18,trialChoiceType,choice);
+              if (trialChoiceType == 1 && choice == 0){
                 randCCt++;
               }
-              else if (trialType == 1 && choice == 1){
+              else if (trialChoiceType == 1 && choice == 1){
                 infoCCt++;
               }
-              else if (trialType == 2 && choice == 1){
+              else if (trialChoiceType == 2 && choice == 1){
                 infoFCt++;
               }
-              else if (trialType == 3 && choice == 0){
+              else if (trialChoiceType == 3 && choice == 0){
                 randFCt++;
               }
               cTCount = randCCt + infoCCt + infoFCt + randFCt;

@@ -1,7 +1,7 @@
 #ifndef __ODOR_H_INCLUDED__
 #define __ODOR_H_INCLUDED__
 
-extern int trialType;
+extern int trialChoiceType;
 extern int valves3a[];
 extern int valves3b[];
 extern int valves1[];
