@@ -9,6 +9,8 @@
 need trialNum, choiceInfoTrialNum, choiceRandTrialNum, forcedInfoTrialNum, forcedRandTrialNum
 need block, blockShuffle
 
+where to put forcedInfoBlock? and block[]? define here and declare in infoseek?!?
+
 */
 
 #include "TrialParams.h"
@@ -20,6 +22,10 @@ int blockShuffle[blockSize];
 const int typeBlockSize = 8;
 int infoBlockShuffle[typeBlockSize];
 int randBlockShuffle[typeBlockSize];
+int infoChoiceBlockShuffle[typeBlockSize];
+int randChoiceBlockShuffle[typeBlockSize];
+int infoForcedBlockShuffle[typeBlockSize];
+int randForcedBlockShuffle[typeBlockSize];
 
 int choiceInfoTrialNum;
 int choiceRandTrialNum;
@@ -44,7 +50,6 @@ void blockSetup(void){
   int randBlockSize;
   int infoBigCount;
   int randBigCount;
-
 
   randomSeed(analogRead(15));
 
@@ -133,6 +138,11 @@ void blockSetup(void){
     }
   }
 
+  infoChoiceBlockShuffle = infoBlockShuffle;
+  infoForcedBlockShuffle = infoBlockShuffle;
+  randChoiceBlockShuffle = randBlockShuffle;
+  randForcedBlockShuffle = randBlockShuffle;
+
   Serial.print("INFO BLOCK TO SHUFFLE = ");
   for (int r=0; r<blockSize; r=r+1){
     Serial.print(infoBlockShuffle[r]);
@@ -177,33 +187,101 @@ void newBlock(){
   Serial.println(" ");
 }
 
-int newTypeBlock(int typeBlockShuffle[8]){
+void newInfoChoiceBlock(){
   int n;
   int temp;
-  int typeBlock[8];
 
   randomSeed(analogRead(15));
 
   for (int i = 0; i<typeBlockSize; i++){
-    typeBlock[i] = typeBlockShuffle[i];
+    infoChoiceBlock[i] = infoChoiceBlockShuffle[i];
   }
 
   for (int i = 0; i<typeBlockSize; i++){
     n = random(0,typeBlockSize);
-    temp = typeBlock[n];
-    typeBlock[n] = typeBlock[i];
-    typeBlock[i] = temp;
+    temp = infoChoiceBlock[n];
+    infoChoiceBlock[n] = infoChoiceBlock[i];
+    infoChoiceBlock[i] = temp;
   }
 
-  Serial.print("NEW TYPE BLOCK = ");
+  Serial.print("NEW INFO CHOICE BLOCK = ");
   for (int j=0; j<blockSize; j++){
-    Serial.print(typeBlock[j]);
+    Serial.print(infoChoiceBlock[j]);
   }
   Serial.println(" ");
-
-  return typeBlock;
 }
 
+void newRandChoiceBlock(){
+  int n;
+  int temp;
+
+  randomSeed(analogRead(15));
+
+  for (int i = 0; i<typeBlockSize; i++){
+    randChoiceBlock[i] = randChoiceBlockShuffle[i];
+  }
+
+  for (int i = 0; i<typeBlockSize; i++){
+    n = random(0,typeBlockSize);
+    temp = randChoiceBlock[n];
+    randChoiceBlock[n] = randChoiceBlock[i];
+    randChoiceBlock[i] = temp;
+  }
+
+  Serial.print("NEW RAND CHOICE BLOCK = ");
+  for (int j=0; j<blockSize; j++){
+    Serial.print(randChoiceBlock[j]);
+  }
+  Serial.println(" ");
+}
+
+void newInfoForcedBlock(){
+  int n;
+  int temp;
+
+  randomSeed(analogRead(15));
+
+  for (int i = 0; i<typeBlockSize; i++){
+    infoForcedBlock[i] = infoForcedBlockShuffle[i];
+  }
+
+  for (int i = 0; i<typeBlockSize; i++){
+    n = random(0,typeBlockSize);
+    temp = infoForcedBlock[n];
+    infoForcedBlock[n] = infoForcedBlock[i];
+    infoForcedBlock[i] = temp;
+  }
+
+  Serial.print("NEW INFO FORCED BLOCK = ");
+  for (int j=0; j<blockSize; j++){
+    Serial.print(infoForcedBlock[j]);
+  }
+  Serial.println(" ");
+}
+
+void newRandForcedBlock(){
+  int n;
+  int temp;
+
+  randomSeed(analogRead(15));
+
+  for (int i = 0; i<typeBlockSize; i++){
+    randForcedBlock[i] = randForcedBlockShuffle[i];
+  }
+
+  for (int i = 0; i<typeBlockSize; i++){
+    n = random(0,typeBlockSize);
+    temp = randForcedBlock[n];
+    randForcedBlock[n] = randForcedBlock[i];
+    randForcedBlock[i] = temp;
+  }
+
+  Serial.print("NEW RAND FORCED BLOCK = ");
+  for (int j=0; j<blockSize; j++){
+    Serial.print(randForcedBlock[j]);
+  }
+  Serial.println(" ");
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -222,7 +300,7 @@ void pickTrialParams(){
         // choice info trial
         if (choiceInfoTrialNum == typeBlockSize){
           Serial.println("NEW CHOICE INFO BLOCK");
-          choiceInfoBlock = newTypeBlock(infoBlockShuffle);
+          newInfoChoiceBlock();
         }
         reward = choiceInfoBlock[choiceInfoTrialNum];
         choiceInfoTrialNum++;
@@ -230,8 +308,8 @@ void pickTrialParams(){
       else if (choice == 0){
         // choice rand trial
         if (choiceRandTrialNum == typeBlockSize){
-          Serial.println("NEW CHOICE randVal BLOCK");
-          choiceRandBlock = newTypeBlock(randBlockShuffle);
+          Serial.println("NEW CHOICE RAND BLOCK");
+          newChoiceRandBlock();
         }
         reward = choiceRandBlock[choiceRandTrialNum];
         choiceRandTrialNum++;        
@@ -241,7 +319,7 @@ void pickTrialParams(){
       // forced info trial
       if (forcedInfoTrialNum == typeBlockSize){
         Serial.println("NEW FORCED INFO BLOCK");
-        forcedInfoBlock = newTypeBlock(infoBlockShuffle);
+        newForcedInfoBlock();
       }
       reward = forcedInfoBlock[forcedInfoTrialNum];
       forcedInfoTrialNum++;
@@ -250,7 +328,7 @@ void pickTrialParams(){
       // forced random trial
       if (forcedRandTrialNum == typeBlockSize){
         Serial.println("NEW FORCED RAND BLOCK");
-        forcedRandBlock = newTypeBlock(randBlockShuffle);
+        newForcedRandBlock();
       }
       reward = forcedRandBlock[forcedRandTrialNum];
       forcedRandTrialNum++;
