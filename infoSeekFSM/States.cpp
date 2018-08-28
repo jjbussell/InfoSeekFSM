@@ -312,7 +312,7 @@ void StateSideOdor::s_setup()
 //  Serial.println(currentTime);
   if (choice < 2){
 //    Serial.println("choose trial params");
-    pickTrialParams(choice);
+    pickTrialParams();
     printer(17,reward,odor);
 //    Serial.println("Side odor on");
     if(choice == 1){

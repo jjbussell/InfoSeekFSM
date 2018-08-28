@@ -1,13 +1,28 @@
+/*
+
+--in blockSetup, create block of choiceTypes(1,2,3) and blocks of outcomes to shuffle for info and rand sides
+--in newBlock, shuffle choice types
+--in newTypeBlock, shuffle trialType block of outcomes-->feed in/out the blocks
+--in startTrial, switch to countup choiceType and call newBlock
+--in pickTrialParams, switch to set outcome, countup trialType, and call newTypeBlock
+
+need trialNum, choiceInfoTrialNum, choiceRandTrialNum, forcedInfoTrialNum, forcedRandTrialNum
+need block, blockShuffle
+
+*/
+
+
+
+
 #include "TrialParams.h"
 #include "Arduino.h"
 
-const int blockSize = 24;
+const int blockSize = globalBlockSize;
 int blockShuffle[blockSize];
-int choiceInfoBlockShuffle[blockSize];
-int choiceRandBlockShuffle[blockSize];
-int choiceInfoBlock[blockSize];
-int choiceRandBlock[blockSize];
-int choiceBlockSize;
+
+const int typeBlockSize = globalTypeBlockSize;
+int infoBlockShuffle[typeBlockSize];
+int randBlockShuffle[typeBlockSize]
 
 /////// REMEMBER TO CHANGE BLOCK COUNT IN SWITCHING TO NEW BLOCK AT TRIAL START!!!
 ////// ALSO REMEMBER TO COUNT UP CHOICE TRIALS!!!!
@@ -22,23 +37,12 @@ void blockSetup(void){
   float infoBlockCount;
   float randBlockCount;
   float choiceBlockCount;
-  int blockTypes[4] = {2,3,4,5};
-  float choiceInfoBigSize;
-  float choiceInfoSmallSize;
-  float choiceRandBigSize;
-  float choiceRandSmallSize;
-  int choiceInfoBigCount;
-  int choiceInfoSmallCount;
-  int choiceRandBigCount;
-  int choiceRandSmallCount;
-  float blockTypeSize[4];
-  int blockTypeCounts[4];
-  int blockTypeCount;
-  int blockType;
-  int startType;
-  int typeStop;
-  int n;
-  int temp;
+  int choiceBlockSize;
+  int infoBlockSize;
+  int randBlockSize;
+  int infoBigCount;
+  int randBigCount;
+
 
   randomSeed(analogRead(15));
 
@@ -77,79 +81,60 @@ void blockSetup(void){
   infoBlockCount = infoPercent * (float)blockSize;
   choiceBlockCount = choicePercent * (float)blockSize;
   choiceBlockSize = (int)choiceBlockCount;
+  infoBlockSize = (int)infoBlockCount;
+  randBlockSize = (int)randBlockCount;
+
+    // Place choice trials
+  for (int  k= 0; k<choiceBlockSize; k++){
+    blockShuffle[k] = 1;
+  }
+
+  // Place info trials
+  for (int i = choiceBlockSize; i<infoBlockSize; i++){
+    blockShuffle[i] = 2;
+  }
+
+  // Place rand trials
+  for (int r = choiceBlockSize + infoBlockSize; r<randBlockSize; r++){
+    blockShuffle[r] = 3;
+  }
+
+  /////////////////  END OF CHOICE TYPE BLOCK TO SHUFFLE
 
   // make a mini-block of choice trials for both info and rand choices = choiceInfoBlock, choiceRandBlock
   // with the correct number of big vs small rewards for each type
   // cycle through based on choices
 
   // count of trials of each choice type in each mini block
-  choiceInfoBigSize = (float)infoRewardProb/100*choiceBlockCount;
-  choiceInfoSmallSize = choiceBlockCount - choiceInfoBigSize;
-  choiceRandBigSize = (float)randRewardProb/100*choiceBlockCount;
-  choiceRandSmallSize = choiceBlockCount - choiceRandBigSize;
-
-  choiceInfoBigCount = (int)choiceInfoBigSize;
-  choiceInfoSmallCount =(int)choiceInfoSmallSize;
-  choiceRandBigCount = (int)choiceRandBigSize;
-  choiceRandSmallCount = (int)choiceRandSmallSize;
+  infoBigCount = infoRewardProb * typeBlockSize;
+  randBigCount = randRewardProb * typeBlockSize;
 
   // assign the rewards to the info and rand choice blocks
-  for (int n=0;n<choiceBlockSize;n++){
-    if (n<choiceInfoBigCount){
-      choiceInfoBlockShuffle[n] = 1;
+  for (int n=0;n<typeBlockSize;n++){
+    if (n<infoBigCount){
+      infoBlockShuffle[n] = 1;
     }
     else {
-      choiceInfoBlockShuffle[n] = 0;
+      infoBlockShuffle[n] = 0;
     }
-    if (n<choiceRandBigCount){
-      choiceRandBlockShuffle[n] = 1;
+    if (n<randBigCount){
+      randBlockShuffle[n] = 1;
     }
     else {
-      choiceRandBlockShuffle[n] = 0;
+      randBlockShuffle[n] = 0;
     }
   }
 
-  if (choiceBlockSize >0){
-    Serial.print("INFO CHOICE BLOCK TO SHUFFLE = ");
-    for (int r=0; r<blockSize; r=r+1){
-      Serial.print(choiceInfoBlockShuffle[r]);
-    }
-    Serial.println(" ");
-    Serial.print("RAND CHOICE BLOCK TO SHUFFLE = ");    
-    for (int r=0; r<blockSize; r=r+1){
-      Serial.print(choiceRandBlockShuffle[r]);
-    }
-    Serial.println(" ");    
+  Serial.print("INFO BLOCK TO SHUFFLE = ");
+  for (int r=0; r<blockSize; r=r+1){
+    Serial.print(infoBlockShuffle[r]);
   }
-
-  // assign the count of each type of forced trial
-  blockTypeSize[0] = (float)infoRewardProb/100*infoBlockCount; // info big
-  blockTypeSize[1] = infoBlockCount - blockTypeSize[0]; // info small
-  blockTypeSize[2] = (float)randRewardProb/100*randBlockCount; // rand big
-  blockTypeSize[3] = randBlockCount-blockTypeSize[2]; // rand small  
-
-  for (int i = 0; i<4; i++){
-    blockTypeCounts[i]=(int)blockTypeSize[i];
+  Serial.println(" ");
+  Serial.print("RAND BLOCK TO SHUFFLE = ");    
+  for (int r=0; r<blockSize; r=r+1){
+    Serial.print(randBlockShuffle[r]);
   }
-
-  /// MAKE FULL BLOCK TO SHUFFLE=blockShuffle
-
-  // Place choice trials
-  for (int k = 0; k<choiceBlockSize; k++){
-    blockShuffle[k] = 1;
-  }
-
-  typeStop = choiceBlockSize;
-  // Place info and random trials
-  for (int p = 0; p<4; p++){
-    blockTypeCount = blockTypeCounts[p];
-    blockType = blockTypes[p];
-    startType = typeStop; 
-    for (int q = startType; q<blockTypeCount+startType; q++){
-      blockShuffle[q] = blockType;
-    }
-    typeStop = startType+blockTypeCount;
-  }
+  Serial.println(" ");    
 
   Serial.print("BLOCK TO SHUFFLE = ");
   for (int r=0; r<blockSize; r=r+1){
@@ -167,17 +152,13 @@ void newBlock(){
 
   int n;
   int temp;
-  int m;
-  int p;
-  int tempInfo;
-  int tempRand;
+
+  randomSeed(analogRead(15));
 
   // SHUFFLE BLOCK  
 
   for (int w=0; w<blockSize; w++){
     block[w] = blockShuffle[w];
-    choiceInfoBlock[w] = choiceInfoBlockShuffle[w];
-    choiceRandBlock[w] = choiceRandBlockShuffle[w];
   }
 
   for (int i=0; i<blockSize; i++){
@@ -192,29 +173,31 @@ void newBlock(){
     Serial.print(block[j]);
   }
   Serial.println(" ");
+}
 
-  for (int i=0;i<choiceBlockSize;i++){
-    m = random(0,choiceBlockSize);
-    tempInfo = choiceInfoBlock[m];
-    choiceInfoBlock[m] = choiceInfoBlock[i];
-    choiceInfoBlock[i] = tempInfo;
-    p = random(0,choiceBlockSize);
-    tempRand = choiceRandBlock[p];
-    choiceRandBlock[p] = choiceRandBlock[i];
-    choiceRandBlock[i] = tempRand;
+int newTypeBlock(int typeBlockShuffle){
+  int n;
+  int temp;
+
+  randomSeed(analogRead(15));
+
+  for (int i = 0; i<typeBlockSize; i++){
+    typeBlock[i] = typeBlockShuffle[i];
   }
 
-  Serial.print("NEW CHOICE INFO BLOCK = ");
+  for (int i = 0; i<typeBlockSize; i++){
+    n = random(0,typeBlockSize);
+    temp = typeBlock[n];
+    typeBlock[n] = typeBlock[i];
+    typeBlock[i] = temp;
+  }
+
+  Serial.print("NEW TYPE BLOCK = ");
   for (int j=0; j<blockSize; j++){
-    Serial.print(choiceInfoBlock[j]);
+    Serial.print(typeBlock[j]);
   }
   Serial.println(" ");
 
-  Serial.print("NEW CHOICE RAND BLOCK = ");
-  for (int j=0; j<blockSize; j++){
-    Serial.print(choiceRandBlock[j]);
-  }
-  Serial.println(" ");
 }
 
 
@@ -223,23 +206,50 @@ void newBlock(){
 
 
 // To SET THE NUMBER OF DROPS AND WATER VALVE AND RANDOM ODOR AND REWARD IF CHOICE
-void pickTrialParams(int choice){
+void pickTrialParams(){
 
-  // REWARD SIZE IS ALREADY SET FOR FORCED TRIALS BUT NOT CHOICE!!!
-  
+
   unsigned long bigRewardTime;
   unsigned long smallRewardTime;
 
-  // SET REWARD SIZE FOR CHOICE TRIAL
-  if (trialChoiceType == 1){
-    if (choice == 1)
-    {
-      reward = choiceInfoBlock[choiceTrialNum];
+  // SET TRIAL TYPE FROM TRIAL CHOICE TYPE BLOCKS
+
+  switch(trialChoiceType){
+    case 1:
+      if (choice == 1){
+        trialType = 1; // choice info trial
+        if (choiceInfoTrialNum == typeBlockSize){
+          choiceInfoBlock = newTypeBlock(infoBlockShuffle);
+        }
+        reward = choiceInfoBlock[choiceInfoTrialNum];
+        choiceInfoTrialNum++;
+      }
+      else if (choice == 0){
+        trialType = 0; // choice info trial
+        if (choiceRandTrialNum == typeBlockSize){
+          choiceRandBlock = newTypeBlock(randBlockShuffle);
+        }
+        reward = choiceRandBlock[choiceRandTrialNum];
+        choiceRandTrialNum++;        
+      }
+      break;
+    case 2:
+      trialType = 2; // forced info trial
+      if (forcedInfoTrialNum == typeBlockSize){
+        forcedInfoBlock = newTypeBlock(infoBlockShuffle);
+      }
+      reward = forcedInfoBlock[forcedInfoTrialNum];
+      forcedInfoTrialNum++;
+      break;
+    case 3:
+      trialType = 3; // forced random trial
+      if (forcedRandTrialNum == typeBlockSize){
+        forcedRandBlock = newTypeBlock(randBlockShuffle);
+      }
+      reward = forcedRandBlock[forcedRandTrialNum];
+      forcedRandTrialNum++;
+      break;
     }
-    else if(choice == 0){
-      reward = choiceRandBlock[choiceTrialNum];
-    }
-  }
   
   // vals based on choice
   if (choice == 1){

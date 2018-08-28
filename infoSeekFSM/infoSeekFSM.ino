@@ -93,10 +93,14 @@ STATE_TYPE next_state;
 //STATE_TYPE current_state;
 
 ///// PARAMS FOR TRIAL
-const int globalBlockSize = 24;
+const int globalBlockSize = 12;
+const int globalTypeBlockSize = 8;
 int block[globalBlockSize];
+int choiceInfoBlock[globalTypeBlockSize];
+int choiceRandBlock[globalTypeBlockSize];
+int forcedInfoBlock[globalTypeBlockSize];
+int forcedRandBlock[globalTypeBlockSize];
 int trialNum;
-int choiceTrialNum;
 int newTrial;
 int trialCt;
 int trialType;
@@ -556,34 +560,11 @@ void loop() {
               if (trialNum == globalBlockSize){
                 newBlock();
                 trialNum = 1;
-                choiceTrialNum = 1; 
               }
               else{
                 trialNum++;
               }
-              trialType = block[trialNum];
-
-              switch(trialType){
-                case 1:
-                  trialChoiceType = 1;
-                  choiceTrialNum++;
-                  break;
-                case 2:
-                  trialChoiceType = 2;
-                  reward = 1;
-                  break;
-                case 3:
-                  trialChoiceType = 2;
-                  reward = 0;
-                  break;
-                case 4:
-                  trialChoiceType = 3;
-                  reward = 1;
-                  break;
-                case 5:
-                  trialChoiceType = 3;
-                  reward = 0;
-                  break;
+              trialChoiceType = block[trialNum];
               }
 
               setCenterOdor();      

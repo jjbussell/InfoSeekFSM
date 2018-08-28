@@ -5,14 +5,16 @@ extern int infoRewardProb;
 extern int randRewardProb;
 extern int odor;
 extern unsigned long currentRewardTime;
-//extern const int blockSize;
+extern int globalBlockSize;
+extern int globalTypeBlockSize;
 extern int block[];
+extern int choiceInfoBlock[];
+extern int choiceRandBlock[];
+extern int forcedInfoBlock[];
+extern int forcedRandBlock[];
 extern int trialType;
 extern int trialChoiceType;
-extern int choiceTrialNum;
 extern int trialTypes;
-extern int infoPort;
-extern int randPort;
 extern int reward;
 extern unsigned long  infoBigRewardTime;
 extern unsigned long infoSmallRewardTime;
@@ -32,7 +34,9 @@ void blockSetup(void);
 
 void newBlock(void);
 
-void pickTrialParams(int);
+int newTypeBlock(int);
+
+void pickTrialParams();
 
 int randomize(int);
 
