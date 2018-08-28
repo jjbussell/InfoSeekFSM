@@ -96,6 +96,12 @@ void blockSetup(void){
     blockShuffle[r] = 3;
   }
 
+  Serial.print("BLOCK TO SHUFFLE = ");
+  for (int r=0; r<blockSize; r=r+1){
+    Serial.print(blockShuffle[r]);
+  }
+  Serial.println(" ");  
+
   /////////////////  END OF CHOICE TYPE BLOCK TO SHUFFLE
 
   // make a mini-block of choice trials for both info and rand choices = choiceInfoBlock, choiceRandBlock
@@ -132,12 +138,6 @@ void blockSetup(void){
     Serial.print(randBlockShuffle[r]);
   }
   Serial.println(" ");    
-
-  Serial.print("BLOCK TO SHUFFLE = ");
-  for (int r=0; r<blockSize; r=r+1){
-    Serial.print(blockShuffle[r]);
-  }
-  Serial.println(" ");
 }
 
 
@@ -195,6 +195,7 @@ int newTypeBlock(int typeBlockShuffle){
   }
   Serial.println(" ");
 
+  return typeBlock;
 }
 
 
@@ -204,8 +205,6 @@ int newTypeBlock(int typeBlockShuffle){
 
 // To SET THE NUMBER OF DROPS AND WATER VALVE AND RANDOM ODOR AND REWARD IF CHOICE
 void pickTrialParams(){
-
-
   unsigned long bigRewardTime;
   unsigned long smallRewardTime;
 
@@ -216,6 +215,7 @@ void pickTrialParams(){
       if (choice == 1){
         // choice info trial
         if (choiceInfoTrialNum == typeBlockSize){
+          Serial.println("NEW CHOICE INFO BLOCK");
           choiceInfoBlock = newTypeBlock(infoBlockShuffle);
         }
         reward = choiceInfoBlock[choiceInfoTrialNum];
@@ -224,6 +224,7 @@ void pickTrialParams(){
       else if (choice == 0){
         // choice rand trial
         if (choiceRandTrialNum == typeBlockSize){
+          Serial.println("NEW CHOICE randVal BLOCK");
           choiceRandBlock = newTypeBlock(randBlockShuffle);
         }
         reward = choiceRandBlock[choiceRandTrialNum];
@@ -233,6 +234,7 @@ void pickTrialParams(){
     case 2:
       // forced info trial
       if (forcedInfoTrialNum == typeBlockSize){
+        Serial.println("NEW FORCED INFO BLOCK");
         forcedInfoBlock = newTypeBlock(infoBlockShuffle);
       }
       reward = forcedInfoBlock[forcedInfoTrialNum];
@@ -241,6 +243,7 @@ void pickTrialParams(){
     case 3:
       // forced random trial
       if (forcedRandTrialNum == typeBlockSize){
+        Serial.println("NEW FORCED RAND BLOCK");
         forcedRandBlock = newTypeBlock(randBlockShuffle);
       }
       reward = forcedRandBlock[forcedRandTrialNum];
