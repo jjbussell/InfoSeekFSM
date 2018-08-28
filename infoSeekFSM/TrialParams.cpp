@@ -14,12 +14,17 @@ need block, blockShuffle
 #include "TrialParams.h"
 #include "Arduino.h"
 
-const int blockSize = globalBlockSize;
+const int blockSize = 24;
 int blockShuffle[blockSize];
 
-const int typeBlockSize = globalTypeBlockSize;
+const int typeBlockSize = 8;
 int infoBlockShuffle[typeBlockSize];
-int randBlockShuffle[typeBlockSize]
+int randBlockShuffle[typeBlockSize];
+
+int choiceInfoTrialNum;
+int choiceRandTrialNum;
+int forcedInfoTrialNum;
+int forcedRandTrialNum;
 
 /////// REMEMBER TO CHANGE BLOCK COUNT IN SWITCHING TO NEW BLOCK AT TRIAL START!!!
 ////// ALSO REMEMBER TO COUNT UP CHOICE TRIALS!!!!
@@ -172,9 +177,10 @@ void newBlock(){
   Serial.println(" ");
 }
 
-int newTypeBlock(int typeBlockShuffle){
+int newTypeBlock(int typeBlockShuffle[8]){
   int n;
   int temp;
+  int typeBlock[8];
 
   randomSeed(analogRead(15));
 
