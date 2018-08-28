@@ -12,7 +12,6 @@ extern int choiceInfoBlock[];
 extern int choiceRandBlock[];
 extern int forcedInfoBlock[];
 extern int forcedRandBlock[];
-extern int trialType;
 extern int trialChoiceType;
 extern int trialTypes;
 extern int reward;

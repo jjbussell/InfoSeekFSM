@@ -11,9 +11,6 @@ need block, blockShuffle
 
 */
 
-
-
-
 #include "TrialParams.h"
 #include "Arduino.h"
 
@@ -217,7 +214,7 @@ void pickTrialParams(){
   switch(trialChoiceType){
     case 1:
       if (choice == 1){
-        trialType = 1; // choice info trial
+        // choice info trial
         if (choiceInfoTrialNum == typeBlockSize){
           choiceInfoBlock = newTypeBlock(infoBlockShuffle);
         }
@@ -225,7 +222,7 @@ void pickTrialParams(){
         choiceInfoTrialNum++;
       }
       else if (choice == 0){
-        trialType = 0; // choice info trial
+        // choice rand trial
         if (choiceRandTrialNum == typeBlockSize){
           choiceRandBlock = newTypeBlock(randBlockShuffle);
         }
@@ -234,7 +231,7 @@ void pickTrialParams(){
       }
       break;
     case 2:
-      trialType = 2; // forced info trial
+      // forced info trial
       if (forcedInfoTrialNum == typeBlockSize){
         forcedInfoBlock = newTypeBlock(infoBlockShuffle);
       }
@@ -242,7 +239,7 @@ void pickTrialParams(){
       forcedInfoTrialNum++;
       break;
     case 3:
-      trialType = 3; // forced random trial
+      // forced random trial
       if (forcedRandTrialNum == typeBlockSize){
         forcedRandBlock = newTypeBlock(randBlockShuffle);
       }

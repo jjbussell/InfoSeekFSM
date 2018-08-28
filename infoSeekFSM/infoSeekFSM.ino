@@ -103,7 +103,6 @@ int forcedRandBlock[globalTypeBlockSize];
 int trialNum;
 int newTrial;
 int trialCt;
-int trialType;
 int trialChoiceType;
 unsigned long currentRewardTime;
 int rewardDrops;
@@ -324,7 +323,6 @@ void loop() {
       choiceStart = 0;
       rxn = 0;
       trialCt = 0;
-      trialType = 0;
       trialChoiceType = 0;
       trialNum = globalBlockSize;
       newTrial = 1;
@@ -570,15 +568,13 @@ void loop() {
               setCenterOdor();      
               newTrial = 0;      
             }
-            printer(10, trialChoiceType, trialType);
+            printer(10, trialChoiceType, 0);
             trialStart = currentTime;
             Serial.println();
             Serial.print("Trial num = ");
             Serial.print(trialCt);
             Serial.print("   Trial choice type = ");
             Serial.print(trialChoiceType);
-            Serial.print("   Trial type = ");
-            Serial.println(trialType);
             Serial.println();
 
 //            Serial.println("end start trial, move to START_TRIAL_DELAY");
