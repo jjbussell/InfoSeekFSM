@@ -264,8 +264,6 @@ void setup() {
 
 void loop() {
 
-
-
   // Wait for signal to start session from Python
   
   // In the future, change this to chatter/trial setter/reset arduino when running session
@@ -551,6 +549,7 @@ void loop() {
             // Need to move all of this and trial type, parameter picking to Python
 
             Serial.println();
+            Serial.println();
             Serial.println("START_TRIAL");
             Serial.println();
             tone(buzzer,4000,200);
@@ -565,12 +564,11 @@ void loop() {
               trialChoiceType = block[trialNum];
               }
 
-              setCenterOdor();      
-              newTrial = 0;      
-            }
+            setCenterOdor();      
+            newTrial = 0;      
+            
             printer(10, trialChoiceType, 0);
             trialStart = currentTime;
-            Serial.println();
             Serial.print("Trial num = ");
             Serial.print(trialCt);
             Serial.print("   Trial choice type = ");
@@ -683,28 +681,29 @@ void loop() {
             break;
 
           case REWARD_COMPLETE:
-              Serial.println();
-              Serial.println("TRIAL COMPLETE");
-              Serial.println();
-              printer(18,trialChoiceType,choice);
-              if (trialChoiceType == 1 && choice == 0){
-                randCCt++;
-              }
-              else if (trialChoiceType == 1 && choice == 1){
-                infoCCt++;
-              }
-              else if (trialChoiceType == 2 && choice == 1){
-                infoFCt++;
-              }
-              else if (trialChoiceType == 3 && choice == 0){
-                randFCt++;
-              }
-              cTCount = randCCt + infoCCt + infoFCt + randFCt;
-              rewardDrops = 0;
-              //  Serial.println("end reward, move to ITI");
-              next_state = INTER_TRIAL_INTERVAL;
-              break;
-        }
+            Serial.println();
+            Serial.println("TRIAL COMPLETE");
+            Serial.println();
+            printer(18,trialChoiceType,choice);
+            if (trialChoiceType == 1 && choice == 0){
+              randCCt++;
+            }
+            else if (trialChoiceType == 1 && choice == 1){
+              infoCCt++;
+            }
+            else if (trialChoiceType == 2 && choice == 1){
+              infoFCt++;
+            }
+            else if (trialChoiceType == 3 && choice == 0){
+              randFCt++;
+            }
+            cTCount = randCCt + infoCCt + infoFCt + randFCt;
+            rewardDrops = 0;
+            //  Serial.println("end reward, move to ITI");
+            next_state = INTER_TRIAL_INTERVAL;
+            break;
+          }
+
       
         //// Update the state variable
         if (next_state != current_state)
