@@ -322,7 +322,7 @@ void loop() {
       rxn = 0;
       trialCt = 0;
       trialChoiceType = 0;
-      trialNum = globalBlockSize;
+      trialNum = globalBlockSize-1;
       newTrial = 1;
       reward = 0;
       currentRewardTime = 0;
@@ -554,9 +554,9 @@ void loop() {
             Serial.println();
             tone(buzzer,4000,200);
             if (newTrial == 1) {
-              if (trialNum == globalBlockSize){
+              if (trialNum == globalBlockSize-1){
                 newBlock();
-                trialNum = 1;
+                trialNum = 0;
               }
               else{
                 trialNum++;
@@ -569,7 +569,7 @@ void loop() {
             
             printer(10, trialChoiceType, 0);
             trialStart = currentTime;
-            Serial.print("Trial num = ");
+            Serial.print("Trial count = ");
             Serial.print(trialCt);
             Serial.print("   Trial choice type = ");
             Serial.print(trialChoiceType);

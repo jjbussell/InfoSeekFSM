@@ -6,7 +6,7 @@
 --in startTrial, switch to countup choiceType and call newBlock
 --in pickTrialParams, switch to set outcome, countup trialType, and call newTypeBlock
 
-need trialNum, choiceInfoTrialNum, choiceRandTrialNum, forcedInfoTrialNum, forcedRandTrialNum
+need choiceInfoTrialNum, choiceRandTrialNum, forcedInfoTrialNum, forcedRandTrialNum
 need block, blockShuffle
 
 where to put forcedInfoBlock? and block[]? define here and declare in infoseek?!?
