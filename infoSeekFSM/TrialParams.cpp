@@ -27,10 +27,10 @@ int randChoiceBlockShuffle[typeBlockSize];
 int infoForcedBlockShuffle[typeBlockSize];
 int randForcedBlockShuffle[typeBlockSize];
 
-int choiceInfoTrialNum = typeBlockSize;
-int choiceRandTrialNum = typeBlockSize;
-int forcedInfoTrialNum = typeBlockSize;
-int forcedRandTrialNum = typeBlockSize;
+int choiceInfoTrialNum = typeBlockSize-1;
+int choiceRandTrialNum = typeBlockSize-1;
+int forcedInfoTrialNum = typeBlockSize-1;
+int forcedRandTrialNum = typeBlockSize-1;
 
 /////// REMEMBER TO CHANGE BLOCK COUNT IN SWITCHING TO NEW BLOCK AT TRIAL START!!!
 ////// ALSO REMEMBER TO COUNT UP CHOICE TRIALS!!!!
@@ -306,44 +306,48 @@ void pickTrialParams(){
     case 1:
       if (choice == 1){
         // choice info trial
-        if (choiceInfoTrialNum == typeBlockSize){
-          Serial.println("NEW CHOICE INFO BLOCK");
+        if (choiceInfoTrialNum == typeBlockSize-1){
           newChoiceInfoBlock();
           choiceInfoTrialNum = 0;
         }
+        else{
+          choiceInfoTrialNum++;
+        }        
         reward = choiceInfoBlock[choiceInfoTrialNum];
-        choiceInfoTrialNum++;
       }
       else if (choice == 0){
         // choice rand trial
-        if (choiceRandTrialNum == typeBlockSize){
-          Serial.println("NEW CHOICE RAND BLOCK");
+        if (choiceRandTrialNum == typeBlockSize-1){
           newChoiceRandBlock();
           choiceRandTrialNum = 0;
         }
-        reward = choiceRandBlock[choiceRandTrialNum];
-        choiceRandTrialNum++;        
+        else{
+          choiceRandTrialNum++;
+        }       
+        reward = choiceRandBlock[choiceRandTrialNum];       
       }
       break;
     case 2:
-      // forced info trial
-      if (forcedInfoTrialNum == typeBlockSize){
-        Serial.println("NEW FORCED INFO BLOCK");
+      // forced info trial   
+      if (forcedInfoTrialNum == typeBlockSize-1){
         newForcedInfoBlock();
         forcedInfoTrialNum = 0;
       }
+      else{
+        forcedInfoTrialNum++;
+      }     
       reward = forcedInfoBlock[forcedInfoTrialNum];
-      forcedInfoTrialNum++;
       break;
     case 3:
       // forced random trial
-      if (forcedRandTrialNum == typeBlockSize){
-        Serial.println("NEW FORCED RAND BLOCK");
+      if (forcedRandTrialNum == typeBlockSize-1){
         newForcedRandBlock();
         forcedRandTrialNum = 0;
       }
+      else{
+        forcedRandTrialNum++;
+      }
       reward = forcedRandBlock[forcedRandTrialNum];
-      forcedRandTrialNum++;
       break;
     }
 

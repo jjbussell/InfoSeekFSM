@@ -569,7 +569,9 @@ void loop() {
             
             printer(10, trialChoiceType, 0);
             trialStart = currentTime;
-            Serial.print("Trial count = ");
+            Serial.print("Trial num = ");
+            Serial.print(trialNum);            
+            Serial.print("  Trial count = ");
             Serial.print(trialCt);
             Serial.print("   Trial choice type = ");
             Serial.print(trialChoiceType);
