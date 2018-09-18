@@ -456,7 +456,7 @@ void loop() {
 
         //// CHECK FOR IMAGING /////////////////////
         // CHANGE HERE TO CHANGE TIME!!
-        if (currentTime >= lastImageChange + 6000 & imageFlag == 1){
+        if (currentTime >= lastImageChange + 300000 & imageFlag == 1){
           if (image == 1){
             image = 0;
             digitalWrite(arduScope, HIGH); 
