@@ -455,7 +455,7 @@ void loop() {
 
         //// CHECK FOR IMAGING /////////////////////
         // CHANGE HERE TO CHANGE TIME!!
-        if (currentTime >= lastImageChange + 300000 & imageFlag == 1){
+        if (currentTime >= lastImageChange + 30000 & imageFlag == 1){
           if (image == 1){
             image = 0;
             digitalWrite(arduScope, HIGH);            
@@ -762,7 +762,7 @@ void readTTL(){
 
 /////////////////  BEAM BREAKS  /////////////////////////
 int beamBreak(int sensorPin) {
-  if (analogRead(sensorPin) < 350) {
+  if (analogRead(sensorPin) < 200) {
     return 1;
   }
 
