@@ -362,6 +362,7 @@ void loop() {
 
       if (imageFlag > 0){
           digitalWrite(arduScope, LOW); //start imaging
+          Serial.println("start imaging");
           image = 1;
           lastImageChange = startTime;
       }
@@ -455,16 +456,21 @@ void loop() {
 
         //// CHECK FOR IMAGING /////////////////////
         // CHANGE HERE TO CHANGE TIME!!
-        if (currentTime >= lastImageChange + 300000 & imageFlag == 1){
+        if (currentTime >= lastImageChange + 6000 & imageFlag == 1){
           if (image == 1){
             image = 0;
-            digitalWrite(arduScope, HIGH);            
+            digitalWrite(arduScope, HIGH); 
+            Serial.print("stop imaging ");
+            Serial.println(currentTime);
+            lastImageChange = currentTime;           
           }
-          else {
+          if (image ==0) {
             image = 1;
             digitalWrite(arduScope, LOW);
+            Serial.print("start imaging ");
+            Serial.println(currentTime);
+            lastImageChange = currentTime;            
           }
-          lastImageChange = currentTime;
         }
 
 
@@ -762,7 +768,7 @@ void readTTL(){
 
 /////////////////  BEAM BREAKS  /////////////////////////
 int beamBreak(int sensorPin) {
-  if (analogRead(sensorPin) < 350) {
+  if (analogRead(sensorPin) < 200) {
     return 1;
   }
 
