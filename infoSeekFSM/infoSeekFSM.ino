@@ -457,20 +457,35 @@ void loop() {
         //// CHECK FOR IMAGING /////////////////////
         // CHANGE HERE TO CHANGE TIME!!
         if (currentTime >= lastImageChange + 300000 & imageFlag == 1){
+//          Serial.print("in imaging change time. image = ");
+//          Serial.println(image);
+//          Serial.print("lastImageChange = ");
+//          Serial.println(lastImageChange);
           if (image == 1){
             image = 0;
-            digitalWrite(arduScope, HIGH);            
+            digitalWrite(arduScope, HIGH);
+            Serial.print("imaging off");
+            Serial.println(currentTime);
+            Serial.print("image = ");
+            Serial.println(image);        
           }
           else {
             image = 1;
             digitalWrite(arduScope, LOW);
+            Serial.print("imaging on");
+            Serial.println(currentTime);
+            Serial.print("image = ");
+            Serial.println(image);                    
           }
+          
           lastImageChange = currentTime;
+//          Serial.print("lastImageChange = ");
+//          Serial.println(lastImageChange);
         }
 
 
         
-        if (image = 1){
+        if (image == 1){
           readTTL();
         }
 
