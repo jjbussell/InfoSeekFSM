@@ -365,7 +365,7 @@ void loop() {
           Serial.println("start imaging");
           image = 1;
           lastImageChange = startTime;
-      }
+      }      
 
 
 //      Serial.println("session start");
@@ -459,18 +459,13 @@ void loop() {
         if (currentTime >= lastImageChange + 300000 & imageFlag == 1){
           if (image == 1){
             image = 0;
-            digitalWrite(arduScope, HIGH); 
-            Serial.print("stop imaging ");
-            Serial.println(currentTime);
-            lastImageChange = currentTime;           
+            digitalWrite(arduScope, HIGH);            
           }
-          if (image ==0) {
+          else {
             image = 1;
             digitalWrite(arduScope, LOW);
-            Serial.print("start imaging ");
-            Serial.println(currentTime);
-            lastImageChange = currentTime;            
           }
+          lastImageChange = currentTime;
         }
 
 
