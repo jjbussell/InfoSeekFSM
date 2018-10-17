@@ -407,7 +407,7 @@ void StateRewardDelay::s_finish()
 //  Serial.println(currentTime);
 //
 // Serial.print("current reward time (drops) ");
- Serial.println(currentRewardTime);
+// Serial.println(currentRewardTime);
 
  rewardDropCount = maxRewardDrops;
   
@@ -437,7 +437,7 @@ void StateRewardDelay::s_finish()
       rewardCount++;
       rewardDrops = currentRewardTime;
 //      Serial.print("reward drops = ");
-      Serial.println(rewardDrops);
+//      Serial.println(rewardDrops);
 
       if (reward == 1) {
         rewardBigCount++;
