@@ -795,7 +795,7 @@ void endingSession (unsigned long stopTime) {
   Serial.print("End time = ");
   Serial.println(stopTime);
   runSession = 0;
-  digitalWrite(arduScope, HIGH);
+  digitalWrite(arduScope, LOW);
   if (centerOdorValveOpen == 1){
     centerOdorOff(currentCenterOdor);
   }
