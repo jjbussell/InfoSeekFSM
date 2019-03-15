@@ -245,7 +245,7 @@ void setup() {
   pinMode (arduScope, OUTPUT);
   pinMode (scopeArdu, INPUT);
 
-  digitalWrite (arduScope, HIGH);
+  digitalWrite (arduScope, LOW);
   digitalWrite (scopeArdu, LOW);
 
   
@@ -361,7 +361,7 @@ void loop() {
       printer(0, 0, 0);
 
       if (imageFlag > 0){
-          digitalWrite(arduScope, LOW); //start imaging
+          digitalWrite(arduScope, HIGH); //start imaging
           Serial.println("start imaging");
           image = 1;
           lastImageChange = startTime;
@@ -463,7 +463,7 @@ void loop() {
 //          Serial.println(lastImageChange);
           if (image == 1){
             image = 0;
-            digitalWrite(arduScope, HIGH);
+            digitalWrite(arduScope, LOW);
             Serial.print("imaging off");
             Serial.println(currentTime);
             Serial.print("image = ");
@@ -471,7 +471,7 @@ void loop() {
           }
           else {
             image = 1;
-            digitalWrite(arduScope, LOW);
+            digitalWrite(arduScope, HIGH);
             Serial.print("imaging on");
             Serial.println(currentTime);
             Serial.print("image = ");
@@ -795,7 +795,7 @@ void endingSession (unsigned long stopTime) {
   Serial.print("End time = ");
   Serial.println(stopTime);
   runSession = 0;
-  digitalWrite(arduScope, HIGH);
+  digitalWrite(arduScope, LOW);
   if (centerOdorValveOpen == 1){
     centerOdorOff(currentCenterOdor);
   }
