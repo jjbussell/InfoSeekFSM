@@ -727,15 +727,15 @@ void loop() {
         if (next_state != current_state)
         {
             
-          Serial.print(currentTime);
-          Serial.print(",");
-          Serial.print(trialCt);
-          Serial.print(",");
-          Serial.print(21);
-          Serial.print(",");
-          Serial.print(current_state);
-          Serial.print(",");
-          Serial.println(next_state);
+//          Serial.print(currentTime);
+//          Serial.print(",");
+//          Serial.print(trialCt);
+//          Serial.print(",");
+//          Serial.print(21);
+//          Serial.print(",");
+//          Serial.print(current_state);
+//          Serial.print(",");
+//          Serial.println(next_state);
           
           Serial.print(millis()-startTime);
           Serial.print(",");
