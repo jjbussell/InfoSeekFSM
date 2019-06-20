@@ -212,7 +212,7 @@ unsigned int touch_left; // lick sensor pin for left sensor
 
 void setup() {
   // Start serial communication
-  Serial.begin(115200);
+  Serial.begin(500000);
 
   // Set up pins
   for (int x = 0; x < 5; x++) {
@@ -765,7 +765,7 @@ void readTTL(){
   if (scopeTTLpulse == 1 && lastTTL == 0){
     TTLcount = TTLcount + scopeTTLpulse;
     scopeTTLpulse = TTLcount;
-    printer1P(20,TTLcount,0);
+//    printer1P(20,TTLcount,0);
     lastTTL = 1;
     scopeTTLpulse = 0;
   }
