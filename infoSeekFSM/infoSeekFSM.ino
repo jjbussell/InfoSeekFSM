@@ -601,6 +601,7 @@ void loop() {
             break;
 
           case START_TRIAL_DELAY:
+            digitalWrite(LED,HIGH);
             state_start_trial_delay.run(currentTime);
             break;
 
@@ -624,7 +625,7 @@ void loop() {
             break;
 
           case GO_CUE:
-            digitalWrite(LED,HIGH);
+//            digitalWrite(LED,HIGH);
             tone(buzzer,9000,50);
             Serial.println("GO_CUE");
             next_state = GO_CUE_DELAY;

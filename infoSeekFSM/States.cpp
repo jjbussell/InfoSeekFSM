@@ -56,6 +56,7 @@ void StateStartTrialDelay::s_finish()
 {
 //  Serial.println("end start trial delay, move to WAIT_FOR_CENTER");
 //  Serial.println("WAIT_FOR_CENTER");
+  digitalWrite(LED,LOW);
   next_state = WAIT_FOR_CENTER;
 }
 
@@ -146,7 +147,7 @@ void StateGoCueDelay::s_finish()
 //// RESPONSE 9
 void StateResponse::s_setup()
 {
-  digitalWrite(LED,LOW);
+//  digitalWrite(LED,LOW);
   choiceStart = millis()-startTime;
 //  Serial.println("RESPONSE");
   
