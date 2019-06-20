@@ -146,6 +146,7 @@ void StateGoCueDelay::s_finish()
 //// RESPONSE 9
 void StateResponse::s_setup()
 {
+  digitalWrite(LED,LOW);
   choiceStart = millis()-startTime;
 //  Serial.println("RESPONSE");
   

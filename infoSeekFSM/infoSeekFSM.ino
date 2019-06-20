@@ -79,6 +79,7 @@ int button = 2; // DIGITAL
 int arduScope = 7;
 int scopeArdu = 6;
 int TOUCH_IRQ = 3;
+int LED = 14;
 
 /////////  OTHERS  ///////////////////////////////////////
 
@@ -240,6 +241,7 @@ void setup() {
 
   pinMode (button, INPUT);
   pinMode (buzzer, OUTPUT);
+  pinMode (LED, OUTPUT);
 
   // Imaging miniscope
   pinMode (arduScope, OUTPUT);
@@ -622,6 +624,7 @@ void loop() {
             break;
 
           case GO_CUE:
+            digitalWrite(LED,HIGH);
             tone(buzzer,9000,50);
             Serial.println("GO_CUE");
             next_state = GO_CUE_DELAY;

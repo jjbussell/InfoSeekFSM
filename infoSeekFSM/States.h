@@ -66,6 +66,7 @@ extern int rewardDropCount;
 extern int maxRewardDrops;
 extern unsigned long currentRewardTime;
 extern uint16_t lickRate;
+extern int LED;
 
 
 class StateWaitForTrial : public TimedState {
