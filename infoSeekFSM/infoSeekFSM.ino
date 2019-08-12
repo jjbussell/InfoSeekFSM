@@ -366,6 +366,7 @@ void loop() {
           digitalWrite(arduScope, HIGH); //start imaging
           Serial.println("start imaging");
           image = 1;
+          printer1P(12,TTLcount,0);
           lastImageChange = startTime;
       }      
 
@@ -469,7 +470,8 @@ void loop() {
             Serial.print("imaging off");
             Serial.println(currentTime);
             Serial.print("image = ");
-            Serial.println(image);        
+            Serial.println(image);
+            printer1P(14,TTLcount,0);       
           }
           else {
             image = 1;
@@ -477,7 +479,8 @@ void loop() {
             Serial.print("imaging on");
             Serial.println(currentTime);
             Serial.print("image = ");
-            Serial.println(image);                    
+            Serial.println(image);
+            printer1P(12,TTLcount,0);                    
           }
           
           lastImageChange = currentTime;
@@ -800,6 +803,7 @@ void endingSession (unsigned long stopTime) {
   Serial.println(stopTime);
   runSession = 0;
   digitalWrite(arduScope, LOW);
+  printer1P(12,TTLcount,0);
   if (centerOdorValveOpen == 1){
     centerOdorOff(currentCenterOdor);
   }
