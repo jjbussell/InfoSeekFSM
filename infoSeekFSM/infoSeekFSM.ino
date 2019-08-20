@@ -803,7 +803,7 @@ void endingSession (unsigned long stopTime) {
   Serial.println(stopTime);
   runSession = 0;
   digitalWrite(arduScope, LOW);
-  printer1P(12,TTLcount,0);
+  
   if (centerOdorValveOpen == 1){
     centerOdorOff(currentCenterOdor);
   }
