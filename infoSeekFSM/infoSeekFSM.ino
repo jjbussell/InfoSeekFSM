@@ -80,6 +80,9 @@ int arduScope = 7;
 int scopeArdu = 6;
 int TOUCH_IRQ = 3;
 int LED = 14;
+int odorGPIO = 40;
+int waterGPIO = 41;
+int startGPIO = 42;
 
 /////////  OTHERS  ///////////////////////////////////////
 
@@ -242,6 +245,9 @@ void setup() {
   pinMode (button, INPUT);
   pinMode (buzzer, OUTPUT);
   pinMode (LED, OUTPUT);
+  pinMode (odorGPIO, OUTPUT);
+  pinMode (waterGPIO, OUTPUT);
+  pinMode (startGPIO, OUTPUT);
 
   // Imaging miniscope
   pinMode (arduScope, OUTPUT);
@@ -605,6 +611,7 @@ void loop() {
 
           case START_TRIAL_DELAY:
             digitalWrite(LED,HIGH);
+            digitalWrite(startGPIO,HIGH);
             state_start_trial_delay.run(currentTime);
             break;
 
@@ -662,11 +669,12 @@ void loop() {
             if (rewardDrops > 0){
 //            if (rewardDrops > 0 & reward == 1 & lickRate >0){
               Serial.println("DELIVER REWARD DROP");
-//              Serial.println("water on");
-              digitalWrite(water, HIGH);
+//              Serial.println("water on");              
               printer(7, choice, 0);
+              digitalWrite(waterGPIO, HIGH);
               waterValveOpen = true;
               rewardAmt = rewardAmt + 4;
+              digitalWrite(water, HIGH);
             }
 
             delay(rewardDropTime);
@@ -678,6 +686,7 @@ void loop() {
               digitalWrite(water, LOW);
               waterValveOpen = false;
               printer(8, choice, 0);
+              digitalWrite(waterGPIO, LOW);
               rewardDrops = rewardDrops - 1;
 //              Serial.print("rewardDrops = ");
 //              Serial.println(rewardDrops);   
@@ -822,5 +831,6 @@ void endingSession (unsigned long stopTime) {
   if (waterValveOpen) {
     digitalWrite(water, LOW);
   }
+  digitalWrite(LED,LOW);
   Serial.println("1003211238");
 }

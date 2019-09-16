@@ -63,6 +63,7 @@ void odorOn (int rewardOdor) {
 //  Serial.print("Odor on ");
 //  Serial.println(rewardOdor);
   printer(3, rewardOdor, 1);
+  digitalWrite(odorGPIO,HIGH);
 }
 
 // To turn OFF an odor
@@ -73,6 +74,7 @@ void odorOff (int rewardOdor) {
 //  Serial.print("odor off ");
 //  Serial.println(rewardOdor);
   printer(5, rewardOdor, 1);
+  digitalWrite(odorGPIO,LOW);
 }
 
 // Center odors
@@ -87,6 +89,7 @@ void centerOdorOn (int centOdor){
 //  Serial.print("center odor on ");
 //  Serial.println(centOdor);
   printer(3,centOdor,0);
+  digitalWrite(odorGPIO,HIGH);
 }
 
 void centerOdorOff (int centOdor){
@@ -99,6 +102,7 @@ void centerOdorOff (int centOdor){
 //  Serial.print("center odor off ");
 //  Serial.println(centOdor);
   printer(5,centOdor,0);
+  digitalWrite(odorGPIO,LOW);
 }
 
 
