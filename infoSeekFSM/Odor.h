@@ -30,6 +30,7 @@ extern int randOdor;
 extern int infoWater;
 extern int randWater;
 extern int waterValves[];
+extern int odorGPIO;
 
 extern void printer(int, int, int);
 

@@ -57,6 +57,7 @@ void StateStartTrialDelay::s_finish()
 //  Serial.println("end start trial delay, move to WAIT_FOR_CENTER");
 //  Serial.println("WAIT_FOR_CENTER");
   digitalWrite(LED,LOW);
+  digitalWrite(startGPIO,LOW);
   next_state = WAIT_FOR_CENTER;
 }
 
