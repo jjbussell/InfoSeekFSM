@@ -80,9 +80,9 @@ int arduScope = 7;
 int scopeArdu = 6;
 int TOUCH_IRQ = 3;
 int LED = 14;
-int odorGPIO = 15;
-int waterGPIO = 16;
-int startGPIO = 17;
+int odorGPIO = 40;
+int waterGPIO = 41;
+int startGPIO = 42;
 
 /////////  OTHERS  ///////////////////////////////////////
 
